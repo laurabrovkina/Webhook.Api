@@ -1,0 +1,21 @@
+﻿@Webhook = https://localhost:7045
+
+### Create order
+
+POST {{Webhook}}/orders
+Content-Type: application/json
+
+{
+"customerName": "string",
+"amount": 123
+}
+
+### Create subscription
+
+POST {{Webhook}}/webhooks/subscriptions
+Content-Type: application/json
+
+{
+  "eventType": "order.created",
+  "webhookUrl": "https://webhook.site/abc3fe0a-4768-4163-bba1-c60c3f938f8f"
+}
