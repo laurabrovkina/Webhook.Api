@@ -6,8 +6,8 @@ POST {{Webhook}}/orders
 Content-Type: application/json
 
 {
-"customerName": "string",
-"amount": 123
+    "customerName": "aaa",
+    "amount": 456
 }
 
 ### Create subscription
@@ -17,5 +17,5 @@ Content-Type: application/json
 
 {
   "eventType": "order.created",
-  "webhookUrl": "https://webhook.site/abc3fe0a-4768-4163-bba1-c60c3f938f8f"
+  "webhookUrl": "https://webhook.site/233836ff-5952-46ef-9cc5-1f881fd70d05"
 }

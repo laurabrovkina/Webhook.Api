@@ -66,6 +66,8 @@ app.MapPost("/orders", async (
         var order = new Order(Guid.NewGuid(), request.CustomerName, request.Amount, DateTime.UtcNow);
 
         dbContext.Orders.Add(order);
+        
+        await dbContext.SaveChangesAsync();
 
         await webhookDispatcher.DispatchAsync("order.created", order);
 
