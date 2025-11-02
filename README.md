@@ -24,3 +24,17 @@ The raw content that we are passing in request:
   }
 }
 ```
+#### Aspire .NET
+To instantiate postgres we are using Aspire .NET, scaffolding required projects with IDE templates for that.
+```csharp
+var database = builder.AddPostgres("postgres")
+    .WithDataVolume()
+    .WithPgAdmin()
+    .AddDatabase("webhooks");
+```
+setting it this way in `AppHost.cs`.
+The Aspire Dashboard is available at `https://localhost:17160/`
+![dashboard](./Img/aspire_dashboard.jpg)
+Also this Aspire template creates a pgadmin container that we can use to connect to the database:
+![pgadmin](./Img/local_pgadmin.jpg)
+And as we can see there is the same record in database that we created in the previous step using our webhook api.
