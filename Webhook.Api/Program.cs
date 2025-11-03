@@ -10,10 +10,6 @@ builder.AddServiceDefaults();
 
 builder.Services.AddOpenApi();
 
-// Register IHttpClientFactory
-builder.Services.AddHttpClient();
-
-// Register WebhookDispatcher as a regular service
 builder.Services.AddScoped<WebhookDispatcher>();
 
 builder.Services.AddDbContext<WebhooksDbContext>(options =>
