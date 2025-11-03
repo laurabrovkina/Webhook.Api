@@ -1,7 +1,10 @@
-﻿using System.Text.Json;
+using System.Diagnostics;
+using System.Text.Json;
+using System.Threading.Channels;
 using Microsoft.EntityFrameworkCore;
 using Webhook.Api.Data;
 using Webhook.Api.Models;
+using Webhook.Api.OpenTelemetry;
 
 namespace Webhook.Api.Services;
 
@@ -9,15 +12,24 @@ public sealed class WebhookDispatcher
 {
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly WebhooksDbContext _dbContext;
+    private readonly Channel<WebhookDispatch> _webhooksChannel;
 
-    public WebhookDispatcher(IHttpClientFactory httpClientFactory,
+    public WebhookDispatcher(
+        Channel<WebhookDispatch> webhooksChannel,
+        IHttpClientFactory httpClientFactory,
         WebhooksDbContext dbContext)
     {
+        _webhooksChannel = webhooksChannel;
         _httpClientFactory = httpClientFactory;
         _dbContext = dbContext;
     }
 
     public async Task DispatchAsync<T>(string eventType, T data)
+        where T : notnull
+    {
+        await _webhooksChannel.Writer.WriteAsync(new WebhookDispatch(eventType, data, activity?.Id));
+    }
+    public async Task ProcessAsync<T>(string eventType, T data)
     {
         var subscriptions = await _dbContext.WebhookSubscriptions
             .AsNoTracking()
