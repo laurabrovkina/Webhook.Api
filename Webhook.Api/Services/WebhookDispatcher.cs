@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text.Json;
 using System.Threading.Channels;
 using Microsoft.EntityFrameworkCore;
@@ -27,8 +27,11 @@ public sealed class WebhookDispatcher
     public async Task DispatchAsync<T>(string eventType, T data)
         where T : notnull
     {
+        using Activity? activity = DiagnosticConfig.Source.StartActivity($"{eventType} dispatch webhook");
+        activity?.AddTag("event.type", eventType);
         await _webhooksChannel.Writer.WriteAsync(new WebhookDispatch(eventType, data, activity?.Id));
     }
+
     public async Task ProcessAsync<T>(string eventType, T data)
     {
         var subscriptions = await _dbContext.WebhookSubscriptions

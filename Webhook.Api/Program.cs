@@ -1,8 +1,10 @@
 using System.Threading.Channels;
 using Microsoft.EntityFrameworkCore;
+using OpenTelemetry;
 using Webhook.Api.Data;
 using Webhook.Api.Extensions;
 using Webhook.Api.Models;
+using Webhook.Api.OpenTelemetry;
 using Webhook.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +26,10 @@ builder.Services.AddSingleton(_ => Channel.CreateBounded<WebhookDispatch>(new Bo
 {
     FullMode = BoundedChannelFullMode.Wait
 }));
+
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracing => tracing.AddSource(DiagnosticConfig.Source.Name));
+
 var app = builder.Build();
 
 app.MapDefaultEndpoints();
