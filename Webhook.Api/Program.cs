@@ -1,8 +1,6 @@
-using System.Threading.Channels;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
-using OpenTelemetry;
 using Webhook.Api.Data;
 using Webhook.Api.Extensions;
 using Webhook.Api.Models;
@@ -22,16 +20,12 @@ builder.Services.AddDbContext<WebhooksDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("webhooks"));
 });
 
-// builder.Services.AddHostedService<WebhookProcessor>();
-//
-// builder.Services.AddSingleton(_ => Channel.CreateBounded<WebhookDispatched>(new BoundedChannelOptions(100)
-// {
-//     FullMode = BoundedChannelFullMode.Wait
-// }));
-
 builder.Services.AddMassTransit(busConfig =>
 {
     busConfig.SetKebabCaseEndpointNameFormatter();
+    
+    busConfig.AddConsumer<WebhookDispatchedConsumer>();
+    busConfig.AddConsumer<WebhookTriggeredConsumer>();
     
     busConfig.UsingRabbitMq((context, config) =>
     {

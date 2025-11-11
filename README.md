@@ -49,3 +49,11 @@ the webhook calls still happen in a separate request. That proves that the dispa
 ![traces](./Img/openTelemetry_improvement.jpg)
 And when we look at the `Webhook.site`, all new webhook calls are visible there:
 ![webhook_site](./Img/webhook_site_5_calls.jpg)
+
+### RabbitMQ
+We can also use RabbitMQ as a message broker so that we can resolve the bottleneck of our dispatching events.
+![rabbitmq](./Img/rabbitmq_exchanges.jpg)
+There are bindings between exchanges and queues:
+![bindings](./Img/web-dispatched%20bindings.jpg)
+And if we look into the queue, we can see how the messages are being dispatched:
+![queue](./Img/queues.jpg)
