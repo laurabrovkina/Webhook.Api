@@ -1,5 +1,7 @@
 using System.Threading.Channels;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using OpenTelemetry;
 using Webhook.Api.Data;
 using Webhook.Api.Extensions;
@@ -20,15 +22,33 @@ builder.Services.AddDbContext<WebhooksDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("webhooks"));
 });
 
-builder.Services.AddHostedService<WebhookProcessor>();
+// builder.Services.AddHostedService<WebhookProcessor>();
+//
+// builder.Services.AddSingleton(_ => Channel.CreateBounded<WebhookDispatch>(new BoundedChannelOptions(100)
+// {
+//     FullMode = BoundedChannelFullMode.Wait
+// }));
 
-builder.Services.AddSingleton(_ => Channel.CreateBounded<WebhookDispatch>(new BoundedChannelOptions(100)
+builder.Services.AddMassTransit(busConfig =>
 {
-    FullMode = BoundedChannelFullMode.Wait
-}));
+    busConfig.SetKebabCaseEndpointNameFormatter();
+    
+    busConfig.UsingRabbitMq((context, config) =>
+    {
+        config.Host(builder.Configuration.GetConnectionString("rabbitmq"));
+        
+        config.ConfigureEndpoints(context);
+    });
+});
 
 builder.Services.AddOpenTelemetry()
-    .WithTracing(tracing => tracing.AddSource(DiagnosticConfig.Source.Name));
+    .WithTracing(tracing =>
+    {
+        tracing
+            .AddSource(DiagnosticConfig.Source.Name)
+            .AddSource(MassTransit.Logging.DiagnosticHeaders.DefaultListenerName)
+            .AddNpgsql();
+    });
 
 var app = builder.Build();
 
