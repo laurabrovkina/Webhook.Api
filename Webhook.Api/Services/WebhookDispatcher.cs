@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Text.Json;
 using System.Threading.Channels;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Webhook.Api.Data;
 using Webhook.Api.Models;
@@ -10,16 +11,16 @@ namespace Webhook.Api.Services;
 
 public sealed class WebhookDispatcher
 {
+    private readonly IPublishEndpoint _publishEndpoint;
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly WebhooksDbContext _dbContext;
-    private readonly Channel<WebhookDispatch> _webhooksChannel;
 
     public WebhookDispatcher(
-        Channel<WebhookDispatch> webhooksChannel,
+        IPublishEndpoint publishEndpoint,
         IHttpClientFactory httpClientFactory,
         WebhooksDbContext dbContext)
     {
-        _webhooksChannel = webhooksChannel;
+        _publishEndpoint = publishEndpoint;
         _httpClientFactory = httpClientFactory;
         _dbContext = dbContext;
     }
@@ -30,7 +31,7 @@ public sealed class WebhookDispatcher
         using Activity? activity = DiagnosticConfig.Source.StartActivity($"{eventType} dispatch webhook");
         activity?.AddTag("event.type", eventType);
         
-        await _webhooksChannel.Writer.WriteAsync(new WebhookDispatch(eventType, data, activity?.Id));
+        await _publishEndpoint.Publish(new WebhookDispatched(eventType, data));
     }
 
     public async Task ProcessAsync<T>(string eventType, T data)

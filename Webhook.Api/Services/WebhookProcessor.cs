@@ -7,11 +7,11 @@ namespace Webhook.Api.Services;
 public sealed class WebhookProcessor : BackgroundService
 {
     private readonly IServiceScopeFactory _serviceScopeFactory; 
-    private readonly Channel<WebhookDispatch> _webhooksChannel;
+    private readonly Channel<WebhookDispatched> _webhooksChannel;
 
     public WebhookProcessor(
         IServiceScopeFactory serviceScopeFactory,
-        Channel<WebhookDispatch> webhooksChannel)
+        Channel<WebhookDispatched> webhooksChannel)
     {
         _serviceScopeFactory = serviceScopeFactory;
         _webhooksChannel = webhooksChannel;
@@ -19,7 +19,7 @@ public sealed class WebhookProcessor : BackgroundService
         
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        await foreach (WebhookDispatch dispatch in _webhooksChannel.Reader.ReadAllAsync(stoppingToken))
+        await foreach (WebhookDispatched dispatch in _webhooksChannel.Reader.ReadAllAsync(stoppingToken))
         {
             using Activity? activity = DiagnosticConfig.Source.StartActivity(
                 $"{dispatch.EventType} process webhook",

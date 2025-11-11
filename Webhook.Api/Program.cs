@@ -24,7 +24,7 @@ builder.Services.AddDbContext<WebhooksDbContext>(options =>
 
 // builder.Services.AddHostedService<WebhookProcessor>();
 //
-// builder.Services.AddSingleton(_ => Channel.CreateBounded<WebhookDispatch>(new BoundedChannelOptions(100)
+// builder.Services.AddSingleton(_ => Channel.CreateBounded<WebhookDispatched>(new BoundedChannelOptions(100)
 // {
 //     FullMode = BoundedChannelFullMode.Wait
 // }));
