@@ -29,6 +29,7 @@ public sealed class WebhookDispatcher
     {
         using Activity? activity = DiagnosticConfig.Source.StartActivity($"{eventType} dispatch webhook");
         activity?.AddTag("event.type", eventType);
+        
         await _webhooksChannel.Writer.WriteAsync(new WebhookDispatch(eventType, data, activity?.Id));
     }
 
