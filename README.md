@@ -57,3 +57,9 @@ There are bindings between exchanges and queues:
 ![bindings](./Img/web-dispatched%20bindings.jpg)
 And if we look into the queue, we can see how the messages are being dispatched:
 ![queue](./Img/queues.jpg)
+
+### Scaling
+The part of our system that does the most demanding work could be decoupled and scaled up using orchestration. In our case Aspire is responsible for that.
+![setup_orchestration](./Img/aspire_setup_for_scaling.jpg)
+Then we can see these containers in the Aspire Dashboard:
+![dashboard_scaling](./Img/dashboard_3_replicas.jpg)
