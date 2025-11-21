@@ -1,8 +1,9 @@
 ﻿using MassTransit;
 using Microsoft.EntityFrameworkCore;
-using Webhook.Api.Data;
+using Webhook.Contacts;
+using Webhook.Processing.Data;
 
-namespace Webhook.Api.Services;
+namespace Webhook.Processing.Services;
 
 public sealed class WebhookDispatchedConsumer : IConsumer<WebhookDispatched>
 {
@@ -21,15 +22,6 @@ public sealed class WebhookDispatchedConsumer : IConsumer<WebhookDispatched>
             .AsNoTracking()
             .Where(s => s.EventType.Equals(message.EventType))
             .ToListAsync();
-
-        // foreach (var subscription in subscriptions)
-        // {
-        //     await context.Publish(new WebhookTriggered(
-        //         subscription.Id,
-        //         subscription.EventType,
-        //         subscription.WebhookUrl,
-        //         message.Data));
-        // }
 
         await context.PublishBatch(subscriptions.Select(s =>
             new WebhookTriggered(

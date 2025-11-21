@@ -1,4 +1,4 @@
-﻿namespace Webhook.Api.Services;
+﻿namespace Webhook.Contacts;
 
 public class WebhookPayload
 {

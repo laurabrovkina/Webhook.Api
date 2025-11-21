@@ -5,6 +5,7 @@ using Webhook.Api.Data;
 using Webhook.Api.Extensions;
 using Webhook.Api.Models;
 using Webhook.Api.OpenTelemetry;
+using Webhook.Api.ServiceDefaults;
 using Webhook.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,9 +24,6 @@ builder.Services.AddDbContext<WebhooksDbContext>(options =>
 builder.Services.AddMassTransit(busConfig =>
 {
     busConfig.SetKebabCaseEndpointNameFormatter();
-    
-    busConfig.AddConsumer<WebhookDispatchedConsumer>();
-    busConfig.AddConsumer<WebhookTriggeredConsumer>();
     
     busConfig.UsingRabbitMq((context, config) =>
     {

@@ -1,4 +1,4 @@
-﻿@Webhook = https://localhost:7045
+﻿@Webhook = http://localhost:54619
 
 ### Create order
 
@@ -17,5 +17,5 @@ Content-Type: application/json
 
 {
   "eventType": "order.created",
-  "webhookUrl": "https://webhook.site/b68167ed-c2d3-439c-840e-d4795f179c48"
+  "webhookUrl": "https://webhook.site/9d5f4460-2010-446e-a11a-7597c8b49cd8"
 }

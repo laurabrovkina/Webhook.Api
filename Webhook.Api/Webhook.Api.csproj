@@ -20,6 +20,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Webhook.Api.ServiceDefaults\Webhook.Api.ServiceDefaults.csproj" />
+      <ProjectReference Include="..\Webhook.Contacts\Webhook.Contacts.csproj" />
     </ItemGroup>
 
 </Project>

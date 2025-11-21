@@ -1,10 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36109.1 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webhook.Api", "Webhook.Api\Webhook.Api.csproj", "{E02F657C-2192-4817-8550-199DE2E8D367}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webhook.Api.AppHost", "Webhook.Api.AppHost\Webhook.Api.AppHost.csproj", "{3EDD9282-4144-4CCD-9C5F-A157AB06E59F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webhook.Api.ServiceDefaults", "Webhook.Api.ServiceDefaults\Webhook.Api.ServiceDefaults.csproj", "{D5D03448-EDD2-4A83-9D62-736CD1366D33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webhook.Processing", "Webhook.Processing\Webhook.Processing.csproj", "{F189D78C-68A2-22B1-98C4-E6A7ECF0B80B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webhook.Contacts", "Webhook.Contacts\Webhook.Contacts.csproj", "{EABA6848-8176-4385-A5B9-24EDA72F536C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +31,16 @@ Global
 		{D5D03448-EDD2-4A83-9D62-736CD1366D33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5D03448-EDD2-4A83-9D62-736CD1366D33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5D03448-EDD2-4A83-9D62-736CD1366D33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F189D78C-68A2-22B1-98C4-E6A7ECF0B80B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F189D78C-68A2-22B1-98C4-E6A7ECF0B80B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F189D78C-68A2-22B1-98C4-E6A7ECF0B80B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F189D78C-68A2-22B1-98C4-E6A7ECF0B80B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EABA6848-8176-4385-A5B9-24EDA72F536C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EABA6848-8176-4385-A5B9-24EDA72F536C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EABA6848-8176-4385-A5B9-24EDA72F536C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EABA6848-8176-4385-A5B9-24EDA72F536C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

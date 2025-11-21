@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using MassTransit;
 using Webhook.Api.OpenTelemetry;
+using Webhook.Contacts;
 
 namespace Webhook.Api.Services;
 
